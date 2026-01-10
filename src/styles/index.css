@@ -1,0 +1,82 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for light mode */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+
+/* Custom scrollbar for dark mode */
+.dark ::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #60a5fa;
+}
+
+/* Infinite Scroll Animation */
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* Items double hain isliye -50% */
+}
+
+/* Scroll Classes */
+.animate-scroll {
+  animation: scroll 40s linear infinite;
+}
+
+.animate-scroll-reverse {
+  animation: scroll 40s linear infinite reverse;
+}
+
+/* Pause on Hover Logic */
+.group:hover .animate-scroll,
+.group:hover .animate-scroll-reverse {
+  animation-play-state: paused;
+}
+
+/* Default cursor ko chupana */
+html,
+body,
+a,
+button,
+input,
+select,
+textarea {
+  cursor: none !important;
+}
+
+/* Mobile par wapis default cursor layen (Mobile par custom cursor acha nahi lagta) */
+@media (max-width: 768px) {
+  html,
+  body,
+  a,
+  button {
+    cursor: auto !important;
+  }
+}
