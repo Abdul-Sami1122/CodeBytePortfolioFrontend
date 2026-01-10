@@ -55,6 +55,11 @@ const contactInfo = [
   },
 ];
 
+// --- DYNAMIC API CONFIGURATION ---
+// This reads from Render's Environment Variables. 
+// If it's not set, it defaults to localhost for your local coding.
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 export function ContactSection() {
   const [ref, isInView] = useInView();
   const [formData, setFormData] = useState({
@@ -79,7 +84,6 @@ export function ContactSection() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // UPDATED: Now connects to a backend API
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) {
@@ -90,8 +94,8 @@ export function ContactSection() {
     setIsSubmitting(true);
 
     try {
-      // Note: Replace with your actual production URL when deploying
-      const response = await fetch('http://localhost:5000/api/contact', {
+      // CONNECTING TO BACKEND
+      const response = await fetch(`${API_URL}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -114,6 +118,7 @@ export function ContactSection() {
         });
         setErrors({});
       } else {
+        // Handle Joi validation errors from backend
         toast.error(data.error || "Failed to send message. Please try again.");
       }
     } catch (error) {
@@ -135,12 +140,10 @@ export function ContactSection() {
       ref={ref}
       className="py-12 md:py-24 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 relative overflow-hidden transition-colors duration-300"
     >
-      {/* Background Decoration */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-300/30 dark:bg-blue-900/20 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-300/30 dark:bg-purple-900/20 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -156,7 +159,6 @@ export function ContactSection() {
           <div className="w-24 h-1 bg-blue-600 mx-auto mt-4 rounded-full" />
         </motion.div>
 
-        {/* Contact Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
           {contactInfo.map((info, index) => {
             const Icon = info.icon;
@@ -186,9 +188,7 @@ export function ContactSection() {
           })}
         </div>
 
-        {/* Main Section */}
         <div className="grid lg:grid-cols-3 gap-8 md:gap-12 max-w-7xl mx-auto">
-          {/* LEFT: Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -201,7 +201,6 @@ export function ContactSection() {
               </h3>
 
               <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Name & Email */}
                 <div className="grid md:grid-cols-2 gap-5">
                   <div className="space-y-2">
                     <Label className="dark:text-gray-300">Your Name</Label>
@@ -230,7 +229,6 @@ export function ContactSection() {
                   </div>
                 </div>
 
-                {/* Phone & Company */}
                 <div className="grid md:grid-cols-2 gap-5">
                   <div className="space-y-2">
                     <Label className="dark:text-gray-300">Phone Number</Label>
@@ -259,7 +257,6 @@ export function ContactSection() {
                   </div>
                 </div>
 
-                {/* Service & Budget */}
                 <div className="grid md:grid-cols-2 gap-5">
                   <div className="space-y-2">
                     <Label className="dark:text-gray-300">
@@ -294,7 +291,6 @@ export function ContactSection() {
                   </div>
                 </div>
 
-                {/* Message Box */}
                 <div className="space-y-2">
                   <Label className="dark:text-gray-300">Message</Label>
                   <Textarea
@@ -320,14 +316,12 @@ export function ContactSection() {
             </div>
           </motion.div>
 
-          {/* RIGHT: Sidebar */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
             className="space-y-6 flex flex-col h-full"
           >
-            {/* Map Visual */}
             <div className="bg-gray-200 dark:bg-gray-700 rounded-3xl h-48 md:h-64 relative overflow-hidden shadow-lg group">
               <img
                 src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=600"
@@ -344,7 +338,6 @@ export function ContactSection() {
               </div>
             </div>
 
-            {/* Socials */}
             <div className="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700">
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
                 Connect With Us
@@ -357,7 +350,6 @@ export function ContactSection() {
               </div>
             </div>
 
-            {/* Why Us */}
             <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-6 rounded-3xl text-white shadow-xl flex-grow">
               <h3 className="text-xl font-bold mb-4">Why Codebit?</h3>
               <ul className="space-y-3">
@@ -386,7 +378,6 @@ export function ContactSection() {
   );
 }
 
-// Social Button Helper
 function SocialBtn({ icon: Icon, color }) {
   return (
     <a
