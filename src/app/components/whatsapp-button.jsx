@@ -8,7 +8,7 @@ export function WhatsAppButton() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Replace with your actual WhatsApp number
-  const whatsappNumber = "923001234567";
+  const whatsappNumber = "+92 322 1652624";
   const message = "Hi! I'm interested in your services at CODEBYTE.";
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
     message
