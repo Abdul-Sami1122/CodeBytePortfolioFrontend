@@ -1,85 +1,201 @@
 import { motion } from "motion/react";
 import { useInView } from "./hooks/use-in-view";
-import { Target, Eye } from "lucide-react";
+import { Target, Eye, Sparkles } from "lucide-react";
+
+const aboutItems = [
+  {
+    id: "mission",
+    icon: Target,
+    title: "Our Mission",
+    description:
+      "To build reliable web solutions that create real business value. We focus on delivering quality, scalable applications that solve real-world problems and drive digital transformation.",
+    color: "from-blue-600 to-cyan-500",
+    iconColor: "text-blue-600",
+    lightShadow: "shadow-blue-200",
+  },
+  {
+    id: "vision",
+    icon: Eye,
+    title: "Our Vision",
+    description:
+      "To become a trusted technology partner for businesses worldwide. We envision a future where every business has access to enterprise-grade web solutions that are both powerful and accessible.",
+    color: "from-purple-600 to-pink-500",
+    iconColor: "text-purple-600",
+    lightShadow: "shadow-purple-200",
+  },
+];
 
 export function AboutSection() {
   const [ref, isInView] = useInView();
+  const sliderItems = [...aboutItems, ...aboutItems, ...aboutItems];
 
   return (
     <section
       ref={ref}
-      // Mobile: py-12, Desktop: py-20. overflow-hidden added to prevent scrollbars during animation
-      className="py-12 md:py-20 bg-white dark:bg-gray-900 transition-colors duration-300 overflow-hidden"
+      className="py-16 md:py-24 bg-gray-50 dark:bg-[#030712] transition-colors duration-300 overflow-hidden relative"
     >
-      <div className="container mx-auto px-4">
-        {/* Header */}
+      <div
+        className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(#6366f1 1px, transparent 1px)",
+          backgroundSize: "30px 30px",
+        }}
+      ></div>
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10 md:mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            About CODEBYTE
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm font-semibold mb-4 border border-blue-200 dark:border-blue-800">
+            <Sparkles className="w-4 h-4" />
+            Who We Are
+          </span>
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            About{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+              CODEBYTE
+            </span>
           </h2>
-          <div className="w-20 md:w-24 h-1 bg-blue-600 mx-auto rounded-full" />
+          <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto px-2">
+            Driven by passion, defined by excellence. We build digital solutions
+            that matter.
+          </p>
         </motion.div>
 
-        {/* Cards Container */}
-        <div className="grid md:grid-cols-2 gap-6 md:gap-12 max-w-5xl mx-auto">
-          {/* Mission Card */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            // Mobile: p-6, Desktop: p-8
-            className="bg-gradient-to-br from-blue-50 to-white dark:from-blue-900/20 dark:to-gray-800 p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-100 dark:border-gray-700"
-          >
-            <div className="flex items-start gap-4">
-              {/* Icon Box: Mobile w-12, Desktop w-14 */}
-              <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/20">
-                <Target className="w-6 h-6 md:w-8 md:h-8 text-white" />
-              </div>
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 md:mb-4">
-                  Our Mission
-                </h3>
-                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
-                  To build reliable web solutions that create real business
-                  value. We focus on delivering quality, scalable applications
-                  that solve real-world problems and drive digital
-                  transformation.
-                </p>
-              </div>
-            </div>
-          </motion.div>
+        {/* --- MOBILE VIEW --- */}
+        <div className="md:hidden relative w-full -mx-4 overflow-hidden py-4 group">
+          <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-gray-50 dark:from-[#030712] to-transparent z-20 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-gray-50 dark:from-[#030712] to-transparent z-20 pointer-events-none" />
 
-          {/* Vision Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="bg-gradient-to-br from-blue-50 to-white dark:from-blue-900/20 dark:to-gray-800 p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-100 dark:border-gray-700"
-          >
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/20">
-                <Eye className="w-6 h-6 md:w-8 md:h-8 text-white" />
-              </div>
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 md:mb-4">
-                  Our Vision
-                </h3>
-                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
-                  To become a trusted technology partner for businesses
-                  worldwide. We envision a future where every business has
-                  access to enterprise-grade web solutions that are both
-                  powerful and accessible.
-                </p>
-              </div>
-            </div>
-          </motion.div>
+          <div className="flex gap-5 w-max px-4 animate-scroll">
+            <style>{`
+               @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+               .animate-scroll { animation: scroll 20s linear infinite; }
+               .group:hover .animate-scroll, .group:active .animate-scroll { animation-play-state: paused !important; }
+             `}</style>
+
+            {sliderItems.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={`mobile-${index}`}
+                  // CHANGE: Added 'hover:scale-105' for scaling effect
+                  className={`
+                     w-[280px] bg-white dark:bg-gray-900/60 backdrop-blur-xl 
+                     border border-gray-200 dark:border-gray-800 
+                     p-6 rounded-[2rem] shadow-lg dark:shadow-none 
+                     flex-shrink-0 relative overflow-hidden 
+                     transition-all duration-300 
+                     hover:scale-105 hover:shadow-xl
+                     active:scale-95 active:border-blue-400
+                   `}
+                >
+                  <div
+                    className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${item.color}`}
+                  />
+                  <div
+                    className={`absolute -right-10 -top-10 w-32 h-32 bg-gradient-to-br ${item.color} opacity-0 active:opacity-20 blur-2xl rounded-full transition-opacity duration-300 pointer-events-none`}
+                  />
+                  <div
+                    className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-4 shadow-lg`}
+                  >
+                    <Icon className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* --- DESKTOP VIEW --- */}
+        <div className="hidden md:grid grid-cols-2 gap-6 md:gap-10 max-w-5xl mx-auto">
+          {aboutItems.map((item, index) => (
+            <AboutCard
+              key={item.id}
+              icon={item.icon}
+              title={item.title}
+              description={item.description}
+              color={item.color}
+              iconColor={item.iconColor}
+              lightShadow={item.lightShadow}
+              delay={0.2 * (index + 1)}
+              isInView={isInView}
+            />
+          ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function AboutCard({
+  icon: Icon,
+  title,
+  description,
+  color,
+  iconColor,
+  lightShadow,
+  delay,
+  isInView,
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: delay }}
+      // CHANGE: Added 'scale: 1.02' to whileHover
+      whileHover={{ y: -10, scale: 1.02 }}
+      className={`group relative p-8 rounded-[2rem] transition-all duration-500
+        bg-white/90 backdrop-blur-xl border border-gray-100 shadow-xl ${lightShadow}
+        dark:bg-gray-900/40 dark:backdrop-blur-md dark:border-white/5 dark:shadow-none
+        hover:shadow-2xl dark:hover:border-opacity-50
+      `}
+    >
+      <div
+        className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-t-[2rem]`}
+      />
+      <div
+        className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-[0.05] dark:group-hover:opacity-[0.08] transition-opacity duration-500 rounded-[2rem] pointer-events-none`}
+      />
+      <div
+        className={`absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-20 blur-2xl rounded-full transition-all duration-500 pointer-events-none`}
+      />
+
+      <div className="relative z-10 flex flex-col sm:flex-row items-start gap-6">
+        <div
+          className={`shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${color} p-[2px] shadow-lg group-hover:scale-110 transition-transform duration-300`}
+        >
+          <div className="w-full h-full bg-white dark:bg-gray-900 rounded-[14px] flex items-center justify-center relative overflow-hidden">
+            <div
+              className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
+            />
+            <Icon
+              className={`w-8 h-8 ${iconColor} dark:text-white relative z-10`}
+            />
+          </div>
+        </div>
+        <div>
+          <h3
+            className={`text-2xl font-bold text-gray-900 dark:text-white mb-3 transition-colors group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r ${color}`}
+          >
+            {title}
+          </h3>
+          <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
+            {description}
+          </p>
+        </div>
+      </div>
+    </motion.div>
   );
 }

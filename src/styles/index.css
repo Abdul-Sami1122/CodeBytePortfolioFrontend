@@ -61,14 +61,14 @@ html {
 }
 
 /* Default cursor ko chupana */
-html,
-body,
+/* html,
+body, */
 a,
 button,
 input,
 select,
 textarea {
-  cursor: none !important;
+  cursor: pointer !important;
 }
 
 /* Mobile par wapis default cursor layen (Mobile par custom cursor acha nahi lagta) */

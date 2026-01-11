@@ -1,55 +1,93 @@
 import { motion } from "motion/react";
 import { useInView } from "./hooks/use-in-view";
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { ExternalLink, ArrowUpRight } from "lucide-react";
+// Images import
+import { WonderLust, SnS, OmniFood, WSCube, WazirGlass } from "./assests/images";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
+// --- PROJECT DATA (Added Border & Text Classes) ---
 const projects = [
   {
-    title: "E-Commerce Platform",
-    category: "Online Store",
+    title: "Wonder Lust",
+    category: "Hotel Reservation Website",
     description:
-      "A modern, responsive e-commerce platform with advanced product management and secure payment integration.",
+      "A fully responsive hotel reservation website that allows users to search rooms, check availability, view pricing, and book rooms online. Designed with a clean UI to provide smooth user experience for travelers.",
+    link: "https://wonderlust-demo.com",
     image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?auto=format&fit=crop&q=80&w=1080",
-    tags: ["React", "Node.js", "Stripe"],
-    color: "from-blue-500 to-cyan-500",
+      WonderLust,
+    tags: ["React", "Node.js", "Mongo DB"],
+    // RED THEME
+    color: "from-red-600 to-rose-500",
+    shadow: "shadow-red-500/20",
+    // New Classes for Border & Text
+    borderClass: "border-red-500 dark:border-red-500",
+    titleClass: "text-red-800 dark:text-red-400",
+    descClass: "text-red-900/70 dark:text-red-200/70",
   },
   {
-    title: "Corporate Portal",
-    category: "Enterprise",
+    title: "Omni Food",
+    category: "Food Delivery Landing Page",
     description:
-      "Enterprise-grade business portal featuring employee management and document collaboration tools.",
-    image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1080",
-    tags: ["PHP", "MySQL", "Bootstrap"],
-    color: "from-purple-500 to-pink-500",
+      "A clean, responsive landing page for a meal subscription service that demonstrates layout sections like Features, Meals, Pricing, Team & Testimonials. Built with modern HTML/CSS and styled for clarity and engagement.",
+    link: "https://omnifoodm1.netlify.app/",
+    image: OmniFood,
+    tags: ["HTML", "CSS", "Bootstrap", "JS"],
+    // ORANGE THEME
+    color: "from-orange-500 to-amber-500",
+    shadow: "shadow-orange-500/20",
+    borderClass: "border-orange-500 dark:border-orange-500",
+    titleClass: "text-orange-800 dark:text-orange-400",
+    descClass: "text-orange-900/70 dark:text-orange-200/70",
   },
   {
-    title: "LMS Platform",
-    category: "Education",
+    title: "S&S Kids Furniture",
+    category: "E-commerce Website",
     description:
-      "Comprehensive learning management system with course creation and student tracking features.",
-    image:
-      "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=1080",
-    tags: ["React", "MongoDB", "WebRTC"],
-    color: "from-orange-500 to-red-500",
+      "An e-commerce styled web interface for kids furniture, highlighting product categories and organized item listings. Demonstrates UI structure suitable for online shopping.",
+    link: "https://faizi-kids-furniture.web.app/",
+    image: SnS,
+    tags: ["React", "Firebase", "Cloudnary"],
+    // YELLOW/AMBER THEME
+    color: "from-yellow-500 to-amber-400",
+    shadow: "shadow-yellow-500/20",
+    borderClass: "border-amber-500 dark:border-amber-500",
+    titleClass: "text-amber-800 dark:text-amber-400",
+    descClass: "text-amber-900/70 dark:text-amber-200/70",
   },
   {
-    title: "Fintech Dashboard",
-    category: "Finance",
+    title: "Wazir Glass & Aluminium",
+    category: "Business / Service Website",
     description:
-      "Real-time financial data visualization dashboard with secure transaction monitoring.",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1080",
-    tags: ["Vue.js", "Python", "D3.js"],
-    color: "from-green-500 to-emerald-500",
+      "A business presentation frontend for a construction-related brand that visually showcases services and contact/action areas for customers. Focuses on lead engagement with slides, feature lists, and responsive sections.",
+    link: "https://wazir-glass-frontend.onrender.com/#",
+    image: WazirGlass,
+    tags: ["React", "Node.js", "Mongo DB"],
+    // BLUE THEME
+    color: "from-blue-600 to-indigo-500",
+    shadow: "shadow-blue-500/20",
+    borderClass: "border-blue-500 dark:border-blue-500",
+    titleClass: "text-blue-800 dark:text-blue-400",
+    descClass: "text-blue-900/70 dark:text-blue-200/70",
+  },
+  {
+    title: "WS Cube",
+    category: "Educational Landing Page",
+    description:
+      "A promotional and lead generation landing page for a digital marketing course with user registration form and content highlighting program benefits.",
+    link: "https://boostrap-assingment-ws.netlify.app/?#",
+    image: WSCube,
+    tags: ["HTML", "CSS", "Bootstrap", "JS"],
+    // CYAN THEME
+    color: "from-cyan-500 to-teal-400",
+    shadow: "shadow-cyan-500/20",
+    borderClass: "border-cyan-500 dark:border-cyan-500",
+    titleClass: "text-cyan-800 dark:text-cyan-400",
+    descClass: "text-cyan-900/70 dark:text-cyan-200/70",
   },
 ];
 
 export function ProjectsSection() {
   const [ref, isInView] = useInView();
-
-  // Infinite Scroll Data
   const sliderProjects = [...projects, ...projects];
 
   return (
@@ -86,14 +124,12 @@ export function ProjectsSection() {
         </motion.div>
 
         {/* --- INFINITE SLIDER CONTAINER --- */}
-        {/* ADDED 'group' CLASS HERE */}
         <div className="relative w-full overflow-hidden group">
           {/* Fade Edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-gray-50 dark:from-[#030712] to-transparent z-20 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-gray-50 dark:from-[#030712] to-transparent z-20 pointer-events-none" />
+          <div className="absolute inset-0 z-20 pointer-events-none [mask-image:linear-gradient(to_right,black_0%,transparent_5%,transparent_95%,black_100%)] md:[mask-image:linear-gradient(to_right,white_0%,transparent_10%,transparent_90%,white_100%)] bg-transparent" />
 
-          {/* Slider Track with Custom Animation Logic */}
-          <div className="flex gap-6 md:gap-8 w-max py-4 animate-scroll">
+          {/* Slider Track */}
+          <div className="flex gap-8 w-max py-12 animate-scroll pl-4">
             <style>{`
                @keyframes scroll {
                  0% { transform: translateX(0); }
@@ -101,11 +137,10 @@ export function ProjectsSection() {
                }
                
                .animate-scroll {
-                 /* 40s duration for smoother project card scrolling */
                  animation: scroll 40s linear infinite;
                }
 
-               /* PAUSE ON HOVER LOGIC */
+               /* PAUSE ON HOVER */
                .group:hover .animate-scroll {
                  animation-play-state: paused !important;
                }
@@ -127,77 +162,114 @@ export function ProjectsSection() {
 // Reusable Premium Project Card
 function ProjectCard({ project }) {
   return (
-    <div className="group relative w-[300px] md:w-[380px] flex-shrink-0">
-      <div className="relative h-full bg-white dark:bg-gray-900/40 dark:backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-3xl overflow-hidden shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 dark:hover:border-white/10">
-        {/* 1. Gradient Border Top */}
+    <a
+      href={project.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group/card relative w-[300px] md:w-[380px] flex-shrink-0 block outline-none perspective-1000"
+    >
+      {/* 1. AMBIENT GLOW */}
+      <div
+        className={`absolute -inset-1 bg-gradient-to-r ${project.color} rounded-[2rem] blur-xl opacity-0 group-hover/card:opacity-50 transition-opacity duration-500 pointer-events-none`}
+      />
+
+      {/* 2. CARD CONTAINER */}
+      <div
+        className={`
+          relative h-full bg-white dark:bg-[#0A0F1C] 
+          /* UPDATED: Uses Custom Border Color Class */
+          border ${project.borderClass}
+          rounded-3xl overflow-hidden 
+          transition-all duration-500 ease-out
+          flex flex-col
+          
+          /* Hover Effects */
+          group-hover/card:scale-[1.03] 
+          group-hover/card:-translate-y-2
+          group-hover/card:shadow-2xl
+          ${project.shadow}
+      `}
+      >
+        {/* Top Border Highlight */}
         <div
           className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${project.color}`}
         />
 
-        {/* 2. Image Section */}
-        <div className="relative h-48 md:h-56 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
+        {/* IMAGE AREA */}
+        <div className="relative h-52 overflow-hidden shrink-0">
+          {/* External Link Icon */}
+          <div className="absolute top-4 right-4 z-20 opacity-0 group-hover/card:opacity-100 transition-all duration-300 translate-y-2 group-hover/card:translate-y-0">
+            <div className="bg-white text-gray-900 p-2.5 rounded-full shadow-lg hover:scale-110 transition-transform">
+              <ExternalLink className="w-4 h-4" />
+            </div>
+          </div>
 
-          {/* Image */}
           <img
-            src={project.image}
+            src={
+              typeof project.image === "string"
+                ? project.image
+                : project.image.src || project.image
+            }
             alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110"
           />
 
           {/* Category Badge */}
           <div className="absolute top-4 left-4 z-20">
-            <span className="px-3 py-1 bg-white/90 backdrop-blur-md text-gray-900 text-xs font-bold rounded-full shadow-sm uppercase tracking-wide">
+            <span
+              className={`px-3 py-1 bg-gradient-to-r ${project.color} backdrop-blur-md border border-white/20 text-white text-xs font-bold rounded-full shadow-lg uppercase tracking-wider`}
+            >
               {project.category}
             </span>
           </div>
-
-          {/* External Link Button */}
-          <div className="absolute top-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
-            <button className="bg-white text-gray-900 p-2.5 rounded-full shadow-lg hover:scale-110 transition-transform">
-              <ExternalLink className="w-5 h-5" />
-            </button>
-          </div>
         </div>
 
-        {/* 3. Content Section */}
-        <div className="p-6 relative">
-          {/* Inner Glow */}
+        {/* TEXT AREA */}
+        <div className="p-6 relative flex-grow flex flex-col justify-between">
+          {/* Background Tint (Light Project Color) */}
           <div
-            className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500 pointer-events-none`}
+            className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-[0.2] dark:opacity-[0.15] pointer-events-none`}
           />
 
-          <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-gray-900 group-hover:to-gray-600 dark:group-hover:from-white dark:group-hover:to-gray-300 transition-all">
-            {project.title}
-          </h3>
+          <div>
+            {/* UPDATED: Title Color */}
+            <h3
+              className={`text-xl md:text-2xl font-bold mb-3 transition-colors ${project.titleClass}`}
+            >
+              {project.title}
+            </h3>
 
-          <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed mb-6 line-clamp-2">
-            {project.description}
-          </p>
+            {/* UPDATED: Description Color */}
+            <p
+              className={`text-sm leading-relaxed mb-6 line-clamp-2 font-medium ${project.descClass}`}
+            >
+              {project.description}
+            </p>
+          </div>
 
-          {/* Tags & Action */}
-          <div className="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
-            <div className="flex -space-x-2 overflow-hidden">
-              {project.tags.slice(0, 3).map((tag, i) => (
-                <div
+          {/* Footer: Tags & Link Text */}
+          <div className="pt-4 border-t border-gray-200/50 dark:border-white/10 flex items-center justify-between relative z-10">
+            {/* TECHNOLOGY TAGS */}
+            <div className="flex flex-wrap gap-2">
+              {project.tags.slice(0, 4).map((tag, i) => (
+                <span
                   key={i}
-                  className={`relative z-${
-                    10 - i
-                  } px-2 py-1 bg-gray-100 dark:bg-gray-800 border-2 border-white dark:border-gray-900 rounded-md text-[10px] font-bold text-gray-600 dark:text-gray-300 uppercase`}
+                  className={`px-2.5 py-1 bg-gradient-to-r ${project.color} border border-white/20 text-white rounded-full text-[10px] font-bold uppercase tracking-wide shadow-sm`}
                 >
                   {tag}
-                </div>
+                </span>
               ))}
             </div>
 
+            {/* View Case Link */}
             <div
-              className={`flex items-center gap-1 text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r ${project.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-4 group-hover:translate-x-0`}
+              className={`flex items-center gap-1.5 text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r ${project.color} opacity-0 group-hover/card:opacity-100 transition-all duration-300 transform -translate-x-2 group-hover/card:translate-x-0`}
             >
-              Details <ArrowRight className={`w-4 h-4 text-blue-500`} />
+              View Case <ArrowUpRight className={`w-5 h-5 text-gray-500`} />
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </a>
   );
 }

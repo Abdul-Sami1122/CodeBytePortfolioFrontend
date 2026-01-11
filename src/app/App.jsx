@@ -9,7 +9,7 @@ import { TeamSection } from "./components/team-section";
 import { WhyChooseUsSection } from "./components/why-choose-us-section";
 import { ContactSection } from "./components/contact-section";
 import { Footer } from "./components/footer";
-import CustomCursor from "./components/ui/CustomCursor";
+// import CustomCursor from "./components/ui/CustomCursor";
 import { Toaster } from "./components/ui/sonner";
 import { ThemeProvider } from "./components/theme-provider";
 import { ScrollToTop } from "./components/scroll-to-top";
@@ -26,7 +26,7 @@ export default function App() {
 
         {/* Navigation */}
 
-        <CustomCursor />
+        {/* <CustomCursor /> */}
         {/* Main Content */}
         <main>
           {/* Hero Section */}
