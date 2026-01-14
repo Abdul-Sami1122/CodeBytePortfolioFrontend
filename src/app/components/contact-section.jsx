@@ -93,17 +93,41 @@ export function ContactSection() {
     setIsSubmitting(true);
 
     try {
+      // Log the API URL being used for debugging
+      console.log("📡 Sending request to:", `${API_URL}/api/contact`);
+      console.log("📤 Form data:", { ...formData, message: "[REDACTED]" });
+
+      // Add timeout to fetch request
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
       const response = await fetch(`${API_URL}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        signal: controller.signal,
       });
 
-      const data = await response.json();
+      clearTimeout(timeoutId);
+
+      console.log("📥 Response status:", response.status, response.statusText);
+
+      // Handle different response types
+      let data;
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        data = await response.json();
+      } else {
+        // Server might return HTML error page
+        const text = await response.text();
+        console.error("❌ Non-JSON response:", text.substring(0, 200));
+        throw new Error("Server returned an invalid response");
+      }
 
       if (response.ok) {
+        console.log("✅ Message sent successfully");
         toast.success("Message sent! We'll contact you shortly.");
         setFormData({
           name: "",
@@ -116,13 +140,50 @@ export function ContactSection() {
         });
         setErrors({});
       } else {
-        toast.error(data.error || "Failed to send message. Please try again.");
+        // Log server-side error details
+        console.error("❌ Server error:", {
+          status: response.status,
+          statusText: response.statusText,
+          data,
+        });
+
+        // Show specific error messages based on status code
+        if (response.status === 429) {
+          toast.error("Too many requests. Please try again in 15 minutes.");
+        } else if (response.status === 400) {
+          toast.error(data.error || "Invalid form data. Please check your inputs.");
+        } else if (response.status === 500) {
+          toast.error("Server error. Our team has been notified. Please try again later.");
+        } else {
+          toast.error(data.error || "Failed to send message. Please try again.");
+        }
       }
     } catch (error) {
-      console.error("Submission error:", error);
-      toast.error(
-        "Could not connect to the server. Please check your internet."
-      );
+      console.error("❌ Submission error:", error);
+
+      // Detailed error handling based on error type
+      if (error.name === "AbortError") {
+        console.error("⏱️ Request timeout after 30 seconds");
+        toast.error("Request timed out. Please check your internet connection and try again.");
+      } else if (error instanceof TypeError && error.message === "Failed to fetch") {
+        console.error("🌐 Network error - possible causes:");
+        console.error("  - Internet disconnected");
+        console.error("  - CORS blocked by server");
+        console.error("  - Server is down");
+        console.error("  - Ad blocker/firewall blocking request");
+        console.error("  - Wrong API URL:", API_URL);
+        toast.error(
+          "Cannot connect to server. Please check your internet connection or try again later."
+        );
+      } else if (!navigator.onLine) {
+        console.error("📡 Browser reports offline status");
+        toast.error("You appear to be offline. Please check your internet connection.");
+      } else {
+        console.error("🔴 Unexpected error:", error.message);
+        toast.error(
+          "An unexpected error occurred. Please try again or contact support."
+        );
+      }
     } finally {
       setIsSubmitting(false);
     }
